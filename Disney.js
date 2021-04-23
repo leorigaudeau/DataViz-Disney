@@ -4,7 +4,7 @@ var canvas;
 const key = 'pk.eyJ1IjoianoxMTExIiwiYSI6ImNqc2syOHlhcjExcmk0M256emx3cncydDQifQ.dRFhBWbfIm97qGZNBzCR0A';
 const mappa = new Mappa('MapboxGL', key);
 
-//Init des tableau/Objet util au dev
+//Init des tableaux/Objets utile au dev
 var disneysData = [];
 var disneySelected = null;
 var photoClickable =[];
@@ -84,14 +84,14 @@ function preload() {
 
 
 function setup() {
-  // creation canva initialisation de la map
+  // création canva initialisation de la map
     canvas = createCanvas(windowWidth, windowHeight);
     pg = createGraphics(400, 250);
     myMap = mappa.tileMap(options);
     myMap.overlay(canvas)
     
 
-    //pour chaque disney nous créeons un objet que nous ajoutons au tabeau disneysData
+    //pour chacun Disney nous créons un objet que nous ajoutons au tableau disneysData
     for (var i = 1; i < disneys.length; i++) {
         var data = disneys[i].split(/,/);
         if (data.length > 1) {
@@ -120,7 +120,7 @@ function draw() {
   image(imgLogoDisney, windowWidth-110,0, 100,100);
   stroke(0, 0, 0,0);
   
-  // si nous avons cliquer sur un disney nous passons dans ce IF
+  // si nous avons cliqué sur un disney nous passons dans ce IF
   if(disneySelected){
     //theme avec celui selectionner en moin transparent 
       themes.forEach((t,index)=>{
@@ -136,14 +136,14 @@ function draw() {
       });
       
       
-    // partie de Erell ajout du livre et compositon de celui-ci en fonction du disney selectionné 
+    // partie d'Erell ajout du livre et compositon de celui-ci en fonction du Disney sélectionné
     image(imgBook, -400, 100);
     if(disneySelected.clicakble){
      //on affiche l'image du disney correspondant
      image(photoClickable[photoClickable.findIndex(d=> Object.keys(d).includes(disneySelected.titreCod))][disneySelected.titreCod],120, 280,300,400)
      image(imgArrow, 400, 470,15,30);
     }
-      // on va chercher le themes du disney choisie (elipses de couleur avec paillette 
+      //on va chercher le thème du Disney choisie (ellipses de couleur avec paillettes)
      if(disneySelected.genre=="Adventure"){
         image(imgAdventure, 350, 200,100,100);
       }
@@ -158,7 +158,7 @@ function draw() {
       }
    
    
-   // affichage du text dans le livre (liue box office et titre) 
+   // affichage du texte dans le livre (lieu box-office et titre) 
     fill(0);
     textSize(20);
     text(disneySelected.place, 155, 680);
@@ -171,7 +171,7 @@ function draw() {
     
   }else{
     
-    // param de base on affiche les themes et l'image du livre fermé 
+    //param de base on affiche les thèmes et l'image du livre fermé
      themes.forEach((t,index)=>{
         textSize(32);
         let c = color(t.color);
@@ -194,7 +194,7 @@ function mouseClicked() {
         }
     }
     
-     // moment de selection du disney
+     // moment de sélection du disney
     if(selectedItems.length >0){
       index =selectedItems.findIndex((d) => d.clicakble == true) !=-1 ? selectedItems.findIndex((d) => d.clicakble == true) : 0
       disneySelected = selectedItems[index]
@@ -227,7 +227,7 @@ function drawPoint() {
         
       
           
-          // en fonction jdu boxOffice on change la taille du cerle et le nombre de paillettes au dessus
+          // en fonction du box-office on change la taille du cercle et le nombre de paillettes au-dessus
           if(disneysData[i].boxoffice<100000000 ){
             sizeCircle = 6;
             sizeZone = (sizeCircle *zoom) / 2
@@ -248,7 +248,7 @@ function drawPoint() {
         
         let tmpThemes= themes.find(element => element.cod==disneysData[i].genre);
         let c = color(tmpThemes.color);
-        // elipsse plein si zoom>8
+        // ellipse pleine si zoom>8
         if( zoom<8){
           fill(0, 0, 0,0);
         }else{
@@ -266,7 +266,7 @@ function drawPoint() {
         
         strokeWeight(3);
         
-        //on affiche les halos d'images sur le hover de chacune d'elle  
+        //on affiche les halos d'images sur le hover de chacune d'elles
         if (mouseX > corrX - sizeZone && mouseX < corrX + sizeZone && mouseY < corrY + sizeZone && mouseY > corrY - sizeZone) {
             if(disneysData[i].clicakble){
               image(imageHovers[imageHovers.findIndex(d=> Object.keys(d).includes(disneysData[i].titreCod))][disneysData[i].titreCod], disneysData[i].corr.x-(30*zoom)/2,disneysData[i].corr.y-(30*zoom)/2, 30*zoom,30*zoom);
@@ -277,7 +277,7 @@ function drawPoint() {
               text(disneysData[i].titre, disneysData[i].corr.x+10,disneysData[i].corr.y,);
             
             }
-            // reducition du cerle pour les autre point (sans hover) 
+            //reducition du cercle pour les autres points (sans hover) 
             sizeCircle  = sizeCircle-2
         }
         
